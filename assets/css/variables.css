@@ -1,0 +1,39 @@
+:root {
+    /* --- Palette: Luxury Gold & Dark (Bất động sản/Dịch vụ cao cấp) --- */
+    --color-gold-100: #F9F1D8;
+    --color-gold-300: #D4AF37;
+    /* Luxury Gold */
+    --color-gold-500: #AA8C2C;
+    --color-dark-900: #0F172A;
+    /* Deep Navy/Black */
+    --color-dark-800: #1E293B;
+
+    /* --- Palette: Health & Beauty (Tươi mới/Tin cậy) --- */
+    --color-skin-100: #FFF1F2;
+    --color-skin-500: #FB7185;
+    --color-green-100: #DCFCE7;
+    --color-green-600: #16A34A;
+    /* Nature Green */
+
+    /* --- Palette: Neutral / General --- */
+    --color-white: #FFFFFF;
+    --color-gray-50: #F8FAFC;
+    --color-gray-200: #E2E8F0;
+    --color-text-main: #334155;
+    --color-text-light: #64748B;
+
+    /* --- Typography (Google Fonts suggestion) --- */
+    --font-heading: 'Playfair Display', serif;
+    /* Sang trọng */
+    --font-body: 'Inter', sans-serif;
+    /* Hiện đại, dễ đọc */
+
+    /* --- Effects --- */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-glow-gold: 0 0 15px rgba(212, 175, 55, 0.3);
+
+    --transition-fast: 0.3s ease;
+    --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

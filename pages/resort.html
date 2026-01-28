@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suntory Coastal Villas - Thiên Đường Nghỉ Dưỡng</title>
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            50: '#F0FDFA',
+                            100: '#CCFBF1',
+                            500: '#14B8A6',
+                            600: '#0D9488',
+                            900: '#134E4A',
+                        },
+                        sand: {
+                            50: '#FDFBF7', // Màu cát trắng
+                            100: '#F3EFE5',
+                            500: '#D4C5A9',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'], // Font hiện đại, tròn trịa
+                        serif: ['Cormorant Garamond', 'serif'], // Font nghệ thuật
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- React & Framer Motion from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #FDFBF7;
+            color: #134E4A;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F0FDFA;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #14B8A6;
+            border-radius: 4px;
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+            color: transparent;
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion, useScroll, useTransform } = Motion;
+
+        const FadeUp = ({ children, delay = 0 }) => (
+            <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay, ease: "easeOut" }}
+            >
+                {children}
+            </motion.div>
+        );
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                lucide.createIcons();
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, [isMobileMenuOpen]);
+
+            return (
+                <div className="min-h-screen bg-sand-50">
+                    {/* Floating Navbar */}
+                    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-sm py-4' : 'bg-transparent py-6'}`}>
+                        <div className="container mx-auto px-6 flex justify-between items-center">
+                            <a href="#" className="flex items-center gap-2 text-teal-900">
+                                <i data-lucide="palmtree" className="w-8 h-8 text-teal-600"></i>
+                                <span className="text-xl md:text-2xl font-serif font-bold tracking-widest">SUNTORY</span>
+                            </a>
+
+                            <div className="hidden md:flex gap-8 items-center text-teal-800 font-medium">
+                                {['Biệt Thự', 'Tiện Ích', 'Vị Trí', 'Đầu Tư'].map(item => (
+                                    <a key={item} href="#" className="hover:text-teal-600 transition relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-teal-600 after:transition-all hover:after:w-full">
+                                        {item}
+                                    </a>
+                                ))}
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <button className="hidden md:block bg-teal-900 text-white px-6 py-2.5 rounded-full hover:bg-teal-700 transition shadow-lg shadow-teal-900/20">
+                                    Nhận Bảng Giá
+                                </button>
+                                <button className="md:hidden text-teal-900" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                                    <i data-lucide={isMobileMenuOpen ? "x" : "menu"} className="w-8 h-8"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Mobile Menu Overlay */}
+                        {isMobileMenuOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-xl p-6 flex flex-col gap-4 md:hidden border-t border-teal-100"
+                            >
+                                {['Biệt Thự', 'Tiện Ích', 'Vị Trí', 'Đầu Tư'].map(item => (
+                                    <a key={item} href="#" className="text-teal-900 font-medium py-3 border-b border-teal-50 hover:text-teal-600">
+                                        {item}
+                                    </a>
+                                ))}
+                                <button className="w-full bg-teal-900 text-white py-3 rounded-xl mt-2 font-bold shadow-lg">
+                                    Nhận Bảng Giá
+                                </button>
+                            </motion.div>
+                        )}
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="relative h-screen flex items-center overflow-hidden">
+                        <motion.div
+                            className="absolute inset-0 z-0"
+                            initial={{ scale: 1.1 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 10 }}
+                        >
+                            <img src="../assets/images/resort_villa_hero.png" className="w-full h-full object-cover" alt="Resort Hero" />
+                            <div className="absolute inset-0 bg-black/30"></div>
+                        </motion.div>
+
+                        <div className="container mx-auto px-6 relative z-10 text-white mt-16">
+                            <FadeUp>
+                                <span className="inline-block border border-white/50 px-4 py-1 rounded-full text-sm mb-6 backdrop-blur-md">
+                                    🏝️ Thiên đường nghỉ dưỡng 6 sao
+                                </span>
+                            </FadeUp>
+                            <FadeUp delay={0.2}>
+                                <h1 className="text-5xl md:text-8xl font-serif italic mb-2 leading-tight">Suntory</h1>
+                                <h1 className="text-4xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">Coastal Villas</h1>
+                            </FadeUp>
+                            <FadeUp delay={0.4}>
+                                <div className="flex flex-col md:flex-row gap-4 md:gap-8 max-w-2xl bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20">
+                                    <div>
+                                        <p className="text-xs md:text-sm opacity-80 uppercase tracking-wider">Vị trí độc tôn</p>
+                                        <p className="font-serif text-lg md:text-xl">Mũi Ông Đội, Phú Quốc</p>
+                                    </div>
+                                    <div className="w-full h-px md:w-px md:h-auto bg-white/30"></div>
+                                    <div>
+                                        <p className="text-xs md:text-sm opacity-80 uppercase tracking-wider">Cam kết lợi nhuận</p>
+                                        <p className="font-serif text-lg md:text-xl">10%/năm trọn đời</p>
+                                    </div>
+                                </div>
+                            </FadeUp>
+                        </div>
+                    </header>
+
+                    {/* Intro Section - Text & Image overlap */}
+                    <section className="py-20 md:py-32 container mx-auto px-6">
+                        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+                            <div className="lg:w-1/2 relative">
+                                <FadeUp>
+                                    <div className="relative z-10">
+                                        <img src="../assets/images/villa_interior_nature.png" className="rounded-[40px] shadow-2xl w-full" alt="Interior" />
+
+                                        {/* Floating Badge (Static on Mobile) */}
+                                        <motion.div
+                                            animate={{ y: [0, -10, 0] }}
+                                            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                                            className="relative md:absolute mt-6 md:mt-0 md:-bottom-10 md:-right-10 bg-white p-6 rounded-3xl shadow-xl max-w-full md:max-w-xs mx-auto md:mx-0 z-20"
+                                        >
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <div className="bg-teal-100 p-2 rounded-full text-teal-600"><i data-lucide="gem"></i></div>
+                                                <span className="font-bold text-teal-900">Eco-Luxury</span>
+                                            </div>
+                                            <p className="text-gray-500 text-sm">Thiết kế không gian mở, hòa mình vào thiên nhiên nguyên bản.</p>
+                                        </motion.div>
+                                    </div>
+                                    {/* Deco shape */}
+                                    <div className="hidden md:block absolute -top-10 -left-10 w-full h-full border-2 border-teal-200 rounded-[40px] z-0"></div>
+                                </FadeUp>
+                            </div>
+
+                            <div className="lg:w-1/2 text-center md:text-left">
+                                <FadeUp delay={0.2}>
+                                    <h3 className="text-teal-600 font-bold uppercase tracking-widest mb-4">Sống Giữa Thiên Nhiên</h3>
+                                    <h2 className="text-4xl md:text-6xl font-serif text-teal-900 mb-6 md:mb-8 leading-tight">
+                                        Nơi Thời Gian <br /> <span className="italic text-teal-500">Ngưng Đọng</span>
+                                    </h2>
+                                    <p className="text-gray-600 text-base md:text-lg mb-8 leading-relaxed">
+                                        Mỗi căn biệt thự là một kiệt tác kiến trúc ẩn mình giữa tán rừng già và biển xanh ngọc bích.
+                                        Sử dụng vật liệu tự nhiên như gỗ, tre và đá, Suntory Villas mang đến trải nghiệm chữa lành (healing) đích thực cho tâm hồn.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-4 md:gap-6">
+                                        <div className="bg-white p-4 rounded-xl shadow-sm border border-sand-100 flex flex-col items-center text-center">
+                                            <i data-lucide="waves" className="text-teal-500 w-8 h-8 mb-2 md:mb-3"></i>
+                                            <h4 className="font-bold text-teal-900 text-sm md:text-base">Mặt tiền biển</h4>
+                                            <p className="text-xs md:text-sm text-gray-500">100% căn hướng biển</p>
+                                        </div>
+                                        <div className="bg-white p-4 rounded-xl shadow-sm border border-sand-100 flex flex-col items-center text-center">
+                                            <i data-lucide="leaf" className="text-teal-500 w-8 h-8 mb-2 md:mb-3"></i>
+                                            <h4 className="font-bold text-teal-900 text-sm md:text-base">Mật độ thấp</h4>
+                                            <p className="text-xs md:text-sm text-gray-500">Chỉ 18% xây dựng</p>
+                                        </div>
+                                    </div>
+                                </FadeUp>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Policy / Investment Section */}
+                    <section className="bg-teal-900 text-white py-24 relative overflow-hidden">
+                        {/* Background Deco */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+
+                        <div className="container mx-auto px-6 relative z-10 text-center">
+                            <FadeUp>
+                                <h2 className="text-4xl md:text-6xl font-serif mb-6">Đặc Quyền Chủ Nhân</h2>
+                                <p className="text-teal-100 max-w-2xl mx-auto mb-16 text-lg">Cơ hội đầu tư sinh lời bền vững cùng kỳ nghỉ dưỡng trọn vẹn bên gia đình.</p>
+                            </FadeUp>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {[
+                                    { icon: "coins", title: "Cam Kết Lợi Nhuận", desc: "Nhận trước 3 năm lợi nhuận tương đương 25% giá trị biệt thự." },
+                                    { icon: "calendar-check", title: "15 Đêm Nghỉ/Năm", desc: "Trao đổi kỳ nghỉ miễn phí trên toàn hệ thống resort 5 sao quốc tế." },
+                                    { icon: "shield-check", title: "Pháp Lý Lâu Dài", desc: "Sổ hồng sở hữu lâu dài, tài sản kế thừa vô giá cho thế hệ sau." }
+                                ].map((item, idx) => (
+                                    <FadeUp key={idx} delay={idx * 0.1}>
+                                        <div className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition group cursor-pointer">
+                                            <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition">
+                                                <i data-lucide={item.icon} className="text-white w-8 h-8"></i>
+                                            </div>
+                                            <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                                            <p className="text-teal-100 text-sm leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </FadeUp>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Call to Action Form */}
+                    <section className="py-16 bg-sand-100">
+                        <div className="container mx-auto px-4 md:px-6">
+                            <div className="bg-white rounded-3xl md:rounded-[3rem] p-8 md:p-16 shadow-xl flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+                                <div className="md:w-1/2 text-center md:text-left">
+                                    <h2 className="text-3xl md:text-5xl font-serif text-teal-900 mb-4">Đăng Ký Tham Quan</h2>
+                                    <p className="text-gray-600 mb-6 text-sm md:text-base">Đài thọ 100% vé máy bay & nghỉ dưỡng 2N1Đ cho khách hàng sớm nhất.</p>
+                                    <div className="flex items-center justify-center md:justify-start gap-4 text-teal-800 font-medium">
+                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-sand-100 rounded-full flex items-center justify-center">
+                                            <i data-lucide="phone-call" className="w-5 h-5 md:w-6 md:h-6"></i>
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-[10px] md:text-xs text-gray-500 uppercase">Hotline tư vấn 24/7</p>
+                                            <p className="text-lg md:text-xl font-bold">1900 6868</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form className="md:w-1/2 w-full space-y-3">
+                                    <input type="text" placeholder="Họ và tên" className="w-full bg-sand-50 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-teal-500 outline-none text-sm md:text-base" />
+                                    <input type="email" placeholder="Email" className="w-full bg-sand-50 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-teal-500 outline-none text-sm md:text-base" />
+                                    <input type="tel" placeholder="Số điện thoại" className="w-full bg-sand-50 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-teal-500 outline-none text-sm md:text-base" />
+                                    <button className="w-full bg-teal-600 text-white font-bold py-3 md:py-4 rounded-xl hover:bg-teal-700 transition shadow-lg shadow-teal-500/30 text-sm md:text-base">
+                                        Đăng Ký Ngay
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer className="bg-teal-900 border-t border-teal-800 pt-20 pb-10 text-teal-100">
+                        <div className="container mx-auto px-6">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10 md:mb-16">
+                                {/* Brand */}
+                                <div className="col-span-2 md:col-span-1">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <i data-lucide="palmtree" className="w-8 h-8 text-teal-500"></i>
+                                        <span className="text-2xl font-serif font-bold tracking-widest text-white">SUNTORY</span>
+                                    </div>
+                                    <p className="opacity-70 leading-relaxed mb-6">
+                                        Chuỗi biệt thự nghỉ dưỡng sinh thái đẳng cấp 6 sao. Tiên phong xu hướng Eco-Luxury tại Việt Nam.
+                                    </p>
+                                    <div className="flex gap-4">
+                                        <a href="#" className="w-10 h-10 rounded-full bg-teal-800 flex items-center justify-center hover:bg-teal-500 hover:text-white transition"><i data-lucide="facebook" className="w-5 h-5"></i></a>
+                                        <a href="#" className="w-10 h-10 rounded-full bg-teal-800 flex items-center justify-center hover:bg-teal-500 hover:text-white transition"><i data-lucide="instagram" className="w-5 h-5"></i></a>
+                                        <a href="#" className="w-10 h-10 rounded-full bg-teal-800 flex items-center justify-center hover:bg-teal-500 hover:text-white transition"><i data-lucide="youtube" className="w-5 h-5"></i></a>
+                                    </div>
+                                </div>
+
+                                {/* Quick Links */}
+                                <div>
+                                    <h4 className="text-white font-serif text-xl mb-3 md:mb-6">Khám Phá</h4>
+                                    <ul className="space-y-2 md:space-y-3 opacity-80">
+                                        <li><a href="#" className="hover:text-teal-400 transition">Về Chúng Tôi</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Biệt Thự Mẫu</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Tiện Ích 6 Sao</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Tin Tức & Sự Kiện</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Tuyển Dụng</a></li>
+                                    </ul>
+                                </div>
+
+                                {/* Project Info */}
+                                <div>
+                                    <h4 className="text-white font-serif text-xl mb-3 md:mb-6">Thông Tin Dự Án</h4>
+                                    <ul className="space-y-2 md:space-y-3 opacity-80">
+                                        <li><a href="#" className="hover:text-teal-400 transition">Chính Sách Bán Hàng</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Tiến Độ Thi Công</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Pháp Lý Dự Án</a></li>
+                                        <li><a href="#" className="hover:text-teal-400 transition">Đối Tác Chiến Lược</a></li>
+                                    </ul>
+                                </div>
+
+                                {/* Contact */}
+                                <div className="col-span-2 md:col-span-1">
+                                    <h4 className="text-white font-serif text-xl mb-3 md:mb-6">Liên Hệ</h4>
+                                    <ul className="space-y-2 md:space-y-4 opacity-80">
+                                        <li className="flex gap-3">
+                                            <i data-lucide="map-pin" className="w-5 h-5 text-teal-500 shrink-0"></i>
+                                            <span>Mũi Ông Đội, An Thới, Phú Quốc, Kiên Giang</span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <i data-lucide="phone" className="w-5 h-5 text-teal-500 shrink-0"></i>
+                                            <span className="text-white font-bold">0909 888 999</span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <i data-lucide="mail" className="w-5 h-5 text-teal-500 shrink-0"></i>
+                                            <span>booking@suntoryvillas.com</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="border-t border-teal-800 pt-8 text-center opacity-60 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                                <p>© 2026 Suntory Coastal Villas. All rights reserved.</p>
+                                <div className="flex gap-6">
+                                    <a href="#" className="hover:text-white">Điều khoản sử dụng</a>
+                                    <a href="#" className="hover:text-white">Chính sách bảo mật</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Design Masterclass - Khóa Học Kỹ Năng Tương Lai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { 900: '#020617', 800: '#0f172a', 700: '#1e293b' },
+                        primary: { 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2' },
+                        accent: { 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #020617;
+            color: white;
+        }
+
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body class="selection:bg-primary-500 selection:text-white">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion, useScroll, useTransform } = Motion;
+
+        const FadeUp = ({ children, delay = 0 }) => (
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }} viewport={{ once: true }}>
+                {children}
+            </motion.div>
+        );
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                lucide.createIcons();
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, [isMobileMenuOpen]);
+
+            const modules = [
+                { title: "Tư duy Design Thinking", desc: "Nắm vững quy trình thiết kế từ ý tưởng đến sản phẩm thực tế.", icon: "brain-circuit" },
+                { title: "Làm chủ AI Tools", desc: "Sử dụng Midjourney, Stable Diffusion để tối ưu hiệu suất 300%.", icon: "bot" },
+                { title: "UI/UX Chuyên Sâu", desc: "Thiết kế giao diện người dùng hiện đại, tối ưu trải nghiệm.", icon: "layout" },
+                { title: "Xây dựng Portfolio", desc: "Kỹ năng đóng gói sản phẩm và deal lương nghìn đô.", icon: "briefcase" }
+            ];
+
+            return (
+                <div className="overflow-x-hidden font-sans text-slate-300">
+                    {/* Glowing Orbs Background */}
+                    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-0 left-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-primary-600/20 rounded-full blur-[80px] md:blur-[100px] mix-blend-screen animate-pulse"></div>
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-accent-600/10 rounded-full blur-[100px] md:blur-[120px] mix-blend-screen"></div>
+                    </div>
+
+                    {/* Navbar */}
+                    <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled ? 'bg-dark-900/90 backdrop-blur-md border-white/10 py-4' : 'bg-transparent border-transparent py-4 md:py-6'}`}>
+                        <div className="container mx-auto px-6 flex justify-between items-center">
+                            <div className="flex items-center gap-2 relative z-50">
+                                <div className="w-8 h-8 bg-gradient-to-tr from-primary-400 to-accent-500 rounded flex items-center justify-center font-bold text-dark-900">A</div>
+                                <span className="text-lg md:text-xl font-bold tracking-tight text-white">Antigravity<span className="text-primary-400">.Academy</span></span>
+                            </div>
+                            <div className="flex items-center gap-4 z-50">
+                                <button className="hidden md:block bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-full border border-white/10 transition font-medium text-sm">
+                                    Đăng Nhập
+                                </button>
+                                <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                                    <i data-lucide={isMobileMenuOpen ? "x" : "menu"} className="w-8 h-8"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Mobile Menu */}
+                        {isMobileMenuOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="fixed inset-0 z-40 bg-dark-900 flex flex-col items-center justify-center gap-8 md:hidden"
+                            >
+                                {['Khóa Học', 'Về Chúng Tôi', 'Blog', 'Liên Hệ'].map(item => (
+                                    <a key={item} href="#" className="text-2xl font-bold text-white hover:text-primary-400">
+                                        {item}
+                                    </a>
+                                ))}
+                                <button className="bg-primary-500 text-white px-8 py-3 rounded-xl font-bold mt-4 shadow-lg shadow-primary-500/25">
+                                    Đăng Nhập Ngay
+                                </button>
+                            </motion.div>
+                        )}
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="relative min-h-screen flex items-center pt-24 md:pt-20 overflow-hidden">
+                        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
+                            <div>
+                                <FadeUp>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary-500/30 bg-primary-500/10 text-primary-400 text-xs font-mono mb-4 md:mb-6">
+                                        <span className="w-2 h-2 rounded-full bg-primary-400 animate-ping"></span>
+                                        KHÓA HỌC MỚI 2026
+                                    </div>
+                                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+                                        Thiết Kế <br />
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 neon-glow">Kỷ Nguyên AI</span>
+                                    </h1>
+                                    <p className="text-lg md:text-xl text-slate-400 mb-6 md:mb-8 max-w-lg leading-relaxed">
+                                        Học cách làm chủ công cụ AI và tư duy thiết kế đột phá. Trở thành Designer "bất khả chiến bại" chỉ sau 8 tuần.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        <button className="bg-gradient-to-r from-primary-500 to-accent-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/25 transition transform hover:-translate-y-1 w-full sm:w-auto text-center">
+                                            Đăng Ký Học Thử
+                                        </button>
+                                        <button className="flex items-center justify-center gap-3 px-8 py-4 rounded-xl border border-white/10 hover:bg-white/5 transition text-white font-medium w-full sm:w-auto">
+                                            <i data-lucide="play-circle" className="w-5 h-5 text-primary-400"></i> Xem Trailer
+                                        </button>
+                                    </div>
+                                    <div className="mt-8 flex items-center gap-4 text-sm text-slate-500">
+                                        <div className="flex -space-x-2">
+                                            {[1, 2, 3, 4].map(i => <div key={i} className="w-8 h-8 rounded-full bg-slate-700 border-2 border-dark-900"></div>)}
+                                        </div>
+                                        <p>+2000 học viên đã tham gia tháng này</p>
+                                    </div>
+                                </FadeUp>
+                            </div>
+
+                            <div className="relative">
+                                {/* Hero Image Container */}
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 1 }}
+                                    className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-accent-900/50"
+                                >
+                                    <img src="../assets/images/course_hero.png" className="w-full h-auto object-cover" alt="AI Creative" />
+
+                                    {/* Floating Code Card */}
+                                    <motion.div
+                                        animate={{ y: [0, -20, 0] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                        className="absolute -bottom-10 -left-10 glass-panel p-6 rounded-2xl hidden md:block"
+                                    >
+                                        <div className="flex items-center gap-3 mb-3">
+                                            <div className="w-10 h-10 rounded bg-blue-500 flex items-center justify-center text-white"><i data-lucide="code-2" className="w-6 h-6"></i></div>
+                                            <div>
+                                                <p className="text-xs text-slate-400 uppercase">Skill Unlocked</p>
+                                                <p className="font-bold text-white">Prompt Engineering</p>
+                                            </div>
+                                        </div>
+                                        <div className="w-48 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div className="w-[85%] h-full bg-gradient-to-r from-blue-400 to-purple-500"></div>
+                                        </div>
+                                    </motion.div>
+                                </motion.div>
+
+                                {/* Decorative elements */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-primary-500/20 to-transparent blur-3xl -z-10"></div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Stats Strip */}
+                    <div className="border-y border-white/5 bg-white/[0.02]">
+                        <div className="container mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+                            {[
+                                { val: "8 Tuần", label: "Lộ trình tinh gọn" },
+                                { val: "50+", label: "Bài giảng video 4K" },
+                                { val: "1:1", label: "Mentor hỗ trợ" },
+                                { val: "Certificate", label: "Chứng chỉ quốc tế" }
+                            ].map((stat, i) => (
+                                <div key={i} className="text-center">
+                                    <p className="text-3xl font-mono font-bold text-white mb-1">{stat.val}</p>
+                                    <p className="text-slate-500 text-sm">{stat.label}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Curriculum */}
+                    <section className="py-24 relative">
+                        <div className="container mx-auto px-6">
+                            <div className="text-center mb-16">
+                                <FadeUp>
+                                    <h2 className="text-4xl font-bold text-white mb-4">Lộ Trình Học Tập</h2>
+                                    <p className="text-slate-400 max-w-2xl mx-auto">Giáo trình được cập nhật liên tục theo xu hướng công nghệ mới nhất 2026.</p>
+                                </FadeUp>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-8">
+                                {modules.map((mod, i) => (
+                                    <FadeUp key={i} delay={i * 0.1}>
+                                        <div className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition duration-300 group cursor-pointer border border-white/5 hover:border-primary-500/30">
+                                            <div className="flex items-start gap-6">
+                                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-900/50 to-primary-800/20 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:scale-110 transition duration-300 shrink-0">
+                                                    <i data-lucide={mod.icon} className="w-7 h-7"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                                                        Module {i + 1}: {mod.title}
+                                                    </h3>
+                                                    <p className="text-slate-400 text-sm leading-relaxed">{mod.desc}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </FadeUp>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Mentor Section */}
+                    <section className="py-20 bg-dark-800 relative overflow-hidden">
+                        <div className="container mx-auto px-6 flex flex-col md:flex-row gap-16 items-center">
+                            <div className="md:w-1/2 relative">
+                                <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl skew-x-1">
+                                    <img src="../assets/images/course_mentor.png" alt="Mentor" className="w-full object-cover" />
+                                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-8">
+                                        <h3 className="text-2xl font-bold text-white">Minh Hoàng</h3>
+                                        <p className="text-primary-400 font-mono text-sm">Creative Director @TechBase</p>
+                                    </div>
+                                </div>
+                                <div className="absolute -inset-4 bg-gradient-to-r from-primary-500 to-accent-600 blur-2xl opacity-20 -z-10"></div>
+                            </div>
+                            <div className="md:w-1/2">
+                                <FadeUp>
+                                    <h2 className="text-4xl font-bold text-white mb-6">Học Từ Chuyên Gia Hàng Đầu</h2>
+                                    <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                                        "Tôi không dạy bạn sử dụng công cụ, tôi dạy bạn tư duy để làm chủ công cụ.
+                                        Trong kỷ nguyên AI, sáng tạo là vũ khí duy nhất bạn không thể bị thay thế."
+                                    </p>
+
+                                    <div className="flex flex-wrap gap-4">
+                                        {['10 Năm Kinh Nghiệm', 'Ex-Google', 'Awwwards Winner'].map(tag => (
+                                            <span key={tag} className="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm font-medium text-slate-300">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </FadeUp>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Student Work Gallery */}
+                    <section className="py-24 relative">
+                        <div className="container mx-auto px-6">
+                            <div className="flex justify-between items-end mb-12">
+                                <div>
+                                    <h2 className="text-4xl font-bold text-white mb-2">Sản Phẩm Học Viên</h2>
+                                    <p className="text-slate-400">Kết quả thực tế sau 8 tuần rèn luyện.</p>
+                                </div>
+                                <button className="hidden md:flex items-center gap-2 text-primary-400 hover:text-primary-300 transition font-medium">
+                                    Xem tất cả <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <motion.div
+                                className="rounded-3xl overflow-hidden border border-white/10 relative group max-w-5xl mx-auto"
+                                whileHover={{ scale: 1.01 }}
+                            >
+                                <img src="../assets/images/course_student_work.png" alt="Portfolio" className="w-full object-cover opacity-80 group-hover:opacity-100 transition duration-500" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-80"></div>
+                                <div className="absolute bottom-8 left-8">
+                                    <h4 className="text-2xl font-bold text-white mb-1">Project: Banking App Reimagined</h4>
+                                    <p className="text-slate-300">Học viên: Ngọc Anh (K24)</p>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </section>
+
+                    {/* CTA Section */}
+                    <section className="py-24 container mx-auto px-6">
+                        <div className="bg-gradient-to-br from-primary-900/40 to-accent-900/40 border border-white/10 rounded-3xl p-8 md:p-20 text-center relative overflow-hidden">
+                            <div className="relative z-10 max-w-3xl mx-auto">
+                                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6">Sẵn Sàng Bứt Phá Sự Nghiệp?</h2>
+                                <p className="text-lg md:text-xl text-slate-300 mb-8 md:mb-10">Đăng ký hôm nay để nhận ưu đãi Early Bird giảm 40%. Số lượng có hạn.</p>
+                                <form className="max-w-md mx-auto flex flex-col md:flex-row gap-4 md:gap-2">
+                                    <input type="email" placeholder="Nhập email tư vấn..." className="flex-1 bg-dark-900/50 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-primary-500 transition w-full" />
+                                    <button className="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-xl font-bold transition shadow-lg shadow-primary-500/20 whitespace-nowrap w-full md:w-auto">
+                                        Giữ Chỗ Ngay
+                                    </button>
+                                </form>
+                                <p className="text-xs text-slate-500 mt-6 md:mt-4">*Cam kết hoàn tiền trong 7 ngày nếu không hài lòng.</p>
+                            </div>
+
+                            {/* Bg effects */}
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/20 blur-[80px] rounded-full"></div>
+                            <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-500/20 blur-[80px] rounded-full"></div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="border-t border-white/5 bg-dark-900 pt-16 pb-8">
+                        <div className="container mx-auto px-6">
+                            <div className="grid md:grid-cols-4 gap-12 mb-12">
+                                <div className="col-span-2">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <div className="w-6 h-6 bg-gradient-to-tr from-primary-400 to-accent-500 rounded flex items-center justify-center font-bold text-dark-900 text-xs">A</div>
+                                        <span className="text-lg font-bold tracking-tight text-white">Antigravity<span className="text-primary-400">.Academy</span></span>
+                                    </div>
+                                    <p className="text-slate-500 text-sm max-w-sm">
+                                        Nền tảng đào tạo kỹ năng số hàng đầu dành cho Gen Z.
+                                        Tiên phong ứng dụng AI vào quy trình làm việc sáng tạo.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-bold mb-6">Khóa Học</h4>
+                                    <ul className="space-y-3 text-sm text-slate-500">
+                                        <li><a href="#" className="hover:text-primary-400 transition">UI/UX Design</a></li>
+                                        <li><a href="#" className="hover:text-primary-400 transition">Digital Marketing</a></li>
+                                        <li><a href="#" className="hover:text-primary-400 transition">Data Analysis</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-bold mb-6">Kết Nối</h4>
+                                    <div className="flex gap-4">
+                                        {[1, 2, 3].map(i => (
+                                            <div key={i} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-primary-500 hover:text-white transition cursor-pointer">
+                                                <i data-lucide={i === 1 ? 'facebook' : i === 2 ? 'youtube' : 'instagram'} className="w-5 h-5"></i>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-white/5 pt-8 text-center text-slate-600 text-xs">
+                                © 2026 Antigravity Academy. All rights reserved.
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            )
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

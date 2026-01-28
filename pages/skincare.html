@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Blanche - Đánh Thức Vẻ Đẹp Nguyên Bản</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pink: { 50: '#FDF2F8', 100: '#FCE7F3', 200: '#FBCFE8', 300: '#F9A8D4', 400: '#F472B6', 500: '#EC4899' },
+                        rose: { 50: '#FFF1F2', 100: '#FFE4E6', 900: '#881337' }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Lato', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #db2777, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-rose-50 text-gray-700 font-sans selection:bg-pink-200">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion, useScroll, useTransform } = Motion;
+
+        const FadeIn = ({ children, delay = 0 }) => (
+            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay }} viewport={{ once: true }}>
+                {children}
+            </motion.div>
+        );
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                lucide.createIcons();
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, [isMobileMenuOpen]);
+
+            return (
+                <div className="overflow-x-hidden">
+                    {/* Navbar */}
+                    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-4 md:py-6'}`}>
+                        <div className="container mx-auto px-6 flex justify-between items-center">
+                            <span className="text-xl md:text-2xl font-serif font-bold tracking-widest text-rose-900 cursor-pointer z-50 relative">LUMIÈRE</span>
+
+                            {/* Desktop Menu */}
+                            <div className="hidden md:flex gap-8 text-sm uppercase tracking-wider text-gray-600 font-medium">
+                                {['Bộ Sưu Tập', 'Câu Chuyện', 'Thành Phần', 'Đánh Giá'].map(item => (
+                                    <a key={item} href="#" className="hover:text-pink-600 transition relativ group">
+                                        {item}
+                                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-pink-400 transition-all group-hover:w-full"></span>
+                                    </a>
+                                ))}
+                            </div>
+
+                            <div className="flex items-center gap-4 z-50">
+                                <i data-lucide="search" className="w-5 h-5 text-gray-500 cursor-pointer hover:text-pink-600 transition"></i>
+                                <i data-lucide="shopping-bag" className="w-5 h-5 text-gray-500 cursor-pointer hover:text-pink-600 transition"></i>
+                                <button className="md:hidden text-gray-700" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                                    <i data-lucide={isMobileMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Mobile Menu */}
+                        {isMobileMenuOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-8 md:hidden text-rose-900"
+                            >
+                                {['Bộ Sưu Tập', 'Câu Chuyện', 'Thành Phần', 'Đánh Giá'].map(item => (
+                                    <a key={item} href="#" className="text-2xl font-serif font-bold hover:text-pink-600">
+                                        {item}
+                                    </a>
+                                ))}
+                            </motion.div>
+                        )}
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="relative min-h-screen flex items-center bg-gradient-to-b from-white to-pink-50 overflow-hidden pt-20 md:pt-0">
+                        {/* Abstract blobs */}
+                        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-pink-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-rose-200/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3"></div>
+
+                        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+                            <div className="pl-0 lg:pl-12 text-center md:text-left order-2 md:order-1">
+                                <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
+                                    <div className="flex items-center justify-center md:justify-start gap-4 mb-4 md:mb-6">
+                                        <div className="h-[1px] w-8 md:w-12 bg-pink-400"></div>
+                                        <span className="text-pink-500 uppercase tracking-[0.2em] text-xs md:text-sm font-bold">New Collection 2026</span>
+                                    </div>
+                                    <h1 className="text-5xl lg:text-8xl font-serif text-rose-900 mb-6 md:mb-8 leading-[1.1]">
+                                        Vẻ Đẹp <br /> <span className="italic font-light">Nguyên Bản</span>
+                                    </h1>
+                                    <p className="text-gray-500 text-base md:text-lg mb-8 md:mb-10 max-w-md mx-auto md:mx-0 leading-relaxed">
+                                        Đánh thức làn da rạng rỡ với tinh chất hoa anh đào Nhật Bản & công nghệ Deep-White™ độc quyền.
+                                    </p>
+                                    <div className="flex gap-4 md:gap-6 justify-center md:justify-start">
+                                        <button className="bg-rose-900 text-white px-8 md:px-10 py-3 md:py-4 rounded-full hover:bg-rose-800 transition shadow-lg shadow-rose-900/20 text-sm md:text-base">Khám Phá Ngay</button>
+                                        <button className="flex items-center gap-3 text-rose-900 font-bold hover:gap-4 transition-all text-sm md:text-base">
+                                            <span>Xem Video</span> <i data-lucide="play-circle" className="w-5 h-5 md:w-6 md:h-6"></i>
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            </div>
+
+                            <div className="relative h-[400px] md:h-[600px] flex items-center justify-center order-1 md:order-2">
+                                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-[100px] border border-white/40 transform rotate-6 scale-90"></div>
+                                <motion.img
+                                    src="../assets/images/skincare_hero_product.png"
+                                    className="relative z-20 w-auto h-[100%] md:h-[120%] object-contain drop-shadow-2xl animate-float"
+                                    alt="Product"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 1, delay: 0.2 }}
+                                />
+                                {/* Floating Petals */}
+                                <motion.div animate={{ y: [0, 20, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity }} className="absolute top-10 right-10 md:right-20 text-pink-300 opacity-60"><i data-lucide="flower-2" className="w-8 h-8 md:w-12 md:h-12"></i></motion.div>
+                                <motion.div animate={{ y: [0, -20, 0], rotate: [0, -10, 0] }} transition={{ duration: 7, repeat: Infinity }} className="absolute bottom-20 left-4 md:left-10 text-pink-300 opacity-60"><i data-lucide="flower" className="w-6 h-6 md:w-8 md:h-8"></i></motion.div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Features / Science */}
+                    <section className="py-32 bg-white">
+                        <div className="container mx-auto px-6">
+                            <div className="text-center mb-20">
+                                <FadeIn>
+                                    <h2 className="text-4xl font-serif text-rose-900 mb-4">Công Nghệ & Thiên Nhiên</h2>
+                                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent mx-auto"></div>
+                                </FadeIn>
+                            </div>
+
+                            <div className="grid md:grid-cols-3 gap-12 relative">
+                                <div className="space-y-12 text-right md:-mt-10">
+                                    <FadeIn delay={0.1}>
+                                        <div className="group">
+                                            <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center ml-auto mb-4 group-hover:bg-pink-100 transition text-pink-500">
+                                                <i data-lucide="droplets" className="w-8 h-8"></i>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-rose-900 mb-2">Cấp Ẩm Đa Tầng</h3>
+                                            <p className="text-gray-500 leading-relaxed">Hyaluronic Acid 3 kích thước phân tử thẩm thấu sâu, ngậm nước suốt 72h.</p>
+                                        </div>
+                                    </FadeIn>
+                                    <FadeIn delay={0.3}>
+                                        <div className="group">
+                                            <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center ml-auto mb-4 group-hover:bg-pink-100 transition text-pink-500">
+                                                <i data-lucide="sparkles" className="w-8 h-8"></i>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-rose-900 mb-2">Dưỡng Trắng Mờ Thâm</h3>
+                                            <p className="text-gray-500 leading-relaxed">Niacinamide 10% kết hợp Vitamin C tinh khiết giúp đều màu da sau 14 ngày.</p>
+                                        </div>
+                                    </FadeIn>
+                                </div>
+
+                                <div className="relative h-[500px] md:h-auto rounded-full overflow-hidden border-8 border-pink-50 shadow-2xl mx-auto w-full max-w-sm">
+                                    <img src="../assets/images/skincare_model_glow.png" className="w-full h-full object-cover" alt="Model" />
+                                </div>
+
+                                <div className="space-y-12 md:-mt-10">
+                                    <FadeIn delay={0.2}>
+                                        <div className="group">
+                                            <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center mr-auto mb-4 group-hover:bg-pink-100 transition text-pink-500">
+                                                <i data-lucide="shield-check" className="w-8 h-8"></i>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-rose-900 mb-2">Màng Chắn Sinh Học</h3>
+                                            <p className="text-gray-500 leading-relaxed">Bảo vệ da khỏi tác hại của tia UV và bụi mịn PM2.5 nhờ chiết xuất tảo biển.</p>
+                                        </div>
+                                    </FadeIn>
+                                    <FadeIn delay={0.4}>
+                                        <div className="group">
+                                            <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center mr-auto mb-4 group-hover:bg-pink-100 transition text-pink-500">
+                                                <i data-lucide="leaf" className="w-8 h-8"></i>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-rose-900 mb-2">Lành Tính Tuyệt Đối</h3>
+                                            <p className="text-gray-500 leading-relaxed">Không cồn, không paraben, không hương liệu. An toàn cho cả da nhạy cảm.</p>
+                                        </div>
+                                    </FadeIn>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Gallery / Mood */}
+                    <section className="py-20 bg-rose-900 text-white overflow-hidden">
+                        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                            <FadeIn>
+                                <h2 className="text-5xl font-serif mb-6 leading-tight">Làn Da Thủy Tinh <br /> <span className="text-pink-300">Glass Skin</span></h2>
+                                <p className="text-rose-100/80 text-lg mb-8 leading-relaxed">
+                                    "Chúng tôi tin rằng vẻ đẹp thực sự bắt nguồn từ một làn da khỏe mạnh.
+                                    Lumière Blanche không chỉ là mỹ phẩm, đó là nghi thức yêu thương bản thân mỗi ngày."
+                                </p>
+                                <div className="grid grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 className="text-4xl font-bold text-pink-400 mb-2">98%</h4>
+                                        <p className="text-sm opacity-70">Khách hàng hài lòng</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-4xl font-bold text-pink-400 mb-2">14 Ngày</h4>
+                                        <p className="text-sm opacity-70">Hiệu quả kiểm chứng</p>
+                                    </div>
+                                </div>
+                            </FadeIn>
+                            <div className="grid grid-cols-2 gap-4">
+                                <motion.div
+                                    whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+                                    transition={{ duration: 0.4 }}
+                                    className="rounded-2xl overflow-hidden shadow-2xl h-64 w-full"
+                                >
+                                    <img src="../assets/images/skincare_texture.png" className="w-full h-full object-cover" alt="Texture" />
+                                </motion.div>
+                                <motion.div
+                                    whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+                                    transition={{ duration: 0.4 }}
+                                    className="rounded-2xl overflow-hidden shadow-2xl h-64 w-full mt-8"
+                                >
+                                    <img src="../assets/images/skincare_lifestyle.png" className="w-full h-full object-cover" alt="Lifestyle" />
+                                </motion.div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Testimonials */}
+                    <section className="py-32 container mx-auto px-6">
+                        <FadeIn>
+                            <h2 className="text-center text-4xl font-serif text-rose-900 mb-20">Phản Hồi Từ Khách Hàng</h2>
+                            <div className="grid md:grid-cols-3 gap-8">
+                                {[
+                                    { name: "Ngọc Trâm", role: "Beauty Blogger", text: "Chất serum lỏng nhẹ, thấm siêu nhanh. Sáng dậy da căng mướt thích cực!" },
+                                    { name: "Lan Anh", role: "Office Worker", text: "Mình dùng hết 1 lọ thấy vết thâm mờ đi rõ rệt. Bao bì sang chảnh, rất ưng." },
+                                    { name: "Tiểu Vy", role: "Model", text: "Bí quyết để có lớp nền makeup hoàn hảo của Vy chính là em serum này đây." }
+                                ].map((item, i) => (
+                                    <div key={i} className="glass-card p-10 rounded-3xl relative hover:-translate-y-2 transition duration-300">
+                                        <div className="absolute -top-6 left-10 w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center text-white text-2xl font-serif">"</div>
+                                        <p className="text-gray-600 italic mb-6 leading-relaxed">{item.text}</p>
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-pink-100 rounded-full overflow-hidden">
+                                                <img src={`https://i.pravatar.cc/150?img=${i + 20}`} alt="User" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-rose-900">{item.name}</h4>
+                                                <p className="text-xs text-pink-500 uppercase tracking-wide">{item.role}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </FadeIn>
+                    </section>
+
+                    {/* Newsletter */}
+                    <section className="py-20 bg-pink-50 border-t border-pink-100">
+                        <div className="container mx-auto px-6 text-center max-w-2xl">
+                            <h2 className="text-3xl font-serif text-rose-900 mb-6">Đăng Ký Nhận Ưu Đãi 30%</h2>
+                            <p className="text-gray-500 mb-8">Nhận bib kíp chăm sóc da và mã giảm giá độc quyền qua email.</p>
+                            <form className="flex gap-2">
+                                <input type="email" placeholder="Email của bạn..." className="flex-1 px-6 py-4 rounded-full border-none shadow-sm focus:ring-2 focus:ring-pink-300 outline-none" />
+                                <button className="bg-rose-900 text-white px-8 py-4 rounded-full font-bold hover:bg-pink-600 transition shadow-lg">Đăng Ký</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <footer className="bg-white py-12 border-t border-gray-100">
+                        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                            <span className="text-xl font-serif font-bold text-rose-900">LUMIÈRE</span>
+                            <div className="text-gray-400 text-sm">© 2026 Lumière Blanche. Developed by Antigravity.</div>
+                            <div className="flex gap-4 text-gray-400">
+                                <i data-lucide="facebook" className="hover:text-pink-500 cursor-pointer transition"></i>
+                                <i data-lucide="instagram" className="hover:text-pink-500 cursor-pointer transition"></i>
+                                <i data-lucide="youtube" className="hover:text-pink-500 cursor-pointer transition"></i>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            )
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

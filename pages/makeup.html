@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rouge Élite - Đánh Thức Vẻ Đẹp Quyền Lực</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rouge: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            800: '#9f1239',
+                            900: '#881337', // Deep Wine Red
+                            950: '#4c0519',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Libraries -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff1f2;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .lipstick-texture {
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            background-color: #9f1239;
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion, useScroll, useTransform } = Motion;
+
+        const FadeIn = ({ children, delay = 0 }) => (
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay }}
+            >
+                {children}
+            </motion.div>
+        );
+
+        const App = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            useEffect(() => {
+                lucide.createIcons();
+            }, []);
+
+            return (
+                <div className="bg-rouge-50 text-rouge-950 min-h-screen">
+                    {/* Navigation */}
+                    <nav className="fixed w-full z-50 p-6 flex justify-between items-center text-white bg-gradient-to-b from-black/40 to-transparent">
+                        <div className="text-2xl font-bold tracking-widest serif uppercase">Rouge Élite</div>
+                        <div className="hidden md:flex gap-8 text-sm font-semibold tracking-widest uppercase">
+                            <a href="#" className="hover:text-rouge-200 transition">Collection</a>
+                            <a href="#" className="hover:text-rouge-200 transition">Story</a>
+                            <a href="#" className="hover:text-rouge-200 transition">Campaign</a>
+                        </div>
+                        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                            <i data-lucide="menu" className="w-8 h-8"></i>
+                        </button>
+                    </nav>
+
+                    {/* Mobile Menu */}
+                    {isMenuOpen && (
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-40 bg-rouge-950 flex flex-col items-center justify-center space-y-8 text-white">
+                            <a href="#" className="text-3xl serif" onClick={() => setIsMenuOpen(false)}>Collection</a>
+                            <a href="#" className="text-3xl serif" onClick={() => setIsMenuOpen(false)}>Story</a>
+                            <a href="#" className="text-3xl serif" onClick={() => setIsMenuOpen(false)}>Contact</a>
+                        </motion.div>
+                    )}
+
+                    {/* Hero Section */}
+                    <header className="relative h-screen overflow-hidden flex items-center justify-center bg-rouge-950 text-white">
+                        <motion.div
+                            initial={{ scale: 1.2, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 1.5 }}
+                            className="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1625093742435-0986922d8493?q=80&w=2574&auto=format&fit=crop')] bg-cover bg-center opacity-60"
+                        ></motion.div>
+
+                        <div className="relative z-10 text-center px-6">
+                            <motion.p
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.5 }}
+                                className="text-sm md:text-base tracking-[0.5em] uppercase mb-4 text-rouge-200"
+                            >
+                                The New Matte Revolution
+                            </motion.p>
+                            <motion.h1
+                                initial={{ y: 50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.8, duration: 0.8 }}
+                                className="text-6xl md:text-9xl font-bold mb-8 leading-none"
+                            >
+                                VELVET <br /> <span className="italic font-light text-rouge-500">KISS</span>
+                            </motion.h1>
+                            <motion.button
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 1.2 }}
+                                className="px-10 py-4 border border-white hover:bg-white hover:text-rouge-900 transition-all duration-300 rounded-full uppercase tracking-widest text-xs md:text-sm"
+                            >
+                                Shop The Shade
+                            </motion.button>
+                        </div>
+                    </header>
+
+                    {/* Shades Section */}
+                    <section className="py-24 px-6 container mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl mb-4">Iconic Shades</h2>
+                            <p className="text-rouge-800 max-w-lg mx-auto">Bảng màu thời thượng, chất son mịn lì như nhung, bền màu suốt 12h.</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                            {[
+                                { name: "Ruby Rush", color: "#9f1239", desc: "Đỏ thuần quyến rũ", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=2630&auto=format&fit=crop" },
+                                { name: "Sunset Kiss", color: "#f43f5e", desc: "Cam san hô năng động", img: "../assets/images/sunset_kiss_lipstick.png" },
+                                { name: "Nude Muse", color: "#be8e85", desc: "Hồng đất thời thượng", img: "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?q=80&w=2574&auto=format&fit=crop" }
+                            ].map((item, i) => (
+                                <FadeIn key={i} delay={i * 0.2}>
+                                    <div className="group cursor-pointer">
+                                        <div className="relative overflow-hidden rounded-[2rem] h-[400px] mb-6 shadow-2xl">
+                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10"></div>
+                                            <img src={item.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt={item.name} />
+                                            {/* Color Swatch */}
+                                            <div className="absolute bottom-6 right-6 w-12 h-12 rounded-full border-2 border-white shadow-lg z-20" style={{ backgroundColor: item.color }}></div>
+                                        </div>
+                                        <h3 className="text-2xl font-bold">{item.name}</h3>
+                                        <p className="text-rouge-600 italic serif">{item.desc}</p>
+                                    </div>
+                                </FadeIn>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Feature Highlight */}
+                    <section className="py-24 bg-rouge-900 text-white relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#F43F5E" d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.1,-19.2,95.8,-4.9C93.5,9.3,82.2,22.9,71.2,34.3C60.2,45.7,49.5,54.9,37.8,62.8C26.1,70.7,13.4,77.3,-0.6,78.3C-14.6,79.3,-27.9,74.7,-40.1,67.3C-52.3,59.9,-63.4,49.7,-72.1,37.5C-80.8,25.3,-87.1,11.1,-86.3,-2.7C-85.5,-16.5,-77.6,-29.9,-67.2,-40.7C-56.8,-51.5,-43.9,-59.7,-30.9,-67.5C-17.9,-75.3,-4.8,-82.7,4.3,-89.4L13.4,-96.1L44.7,-76.4Z" transform="translate(100 100)" />
+                            </svg>
+                        </div>
+
+                        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
+                            <motion.div
+                                initial={{ x: -50, opacity: 0 }}
+                                whileInView={{ x: 0, opacity: 1 }}
+                                transition={{ duration: 1 }}
+                            >
+                                <img src="../assets/images/lipstick_product_feature.png" className="rounded-t-full border-4 border-white/20 shadow-2xl floating" alt="Lipstick Product" />
+                            </motion.div>
+                            <div>
+                                <h2 className="text-5xl md:text-7xl mb-8 leading-tight">Chất Son <br /> <span className="text-rouge-400 italic">Thuần Chay</span></h2>
+                                <ul className="space-y-6 text-lg font-light">
+                                    <li className="flex items-center gap-4">
+                                        <i data-lucide="droplet" className="text-rouge-400"></i>
+                                        <span>Dưỡng ẩm sâu với dầu Jojoba & Vitamin E</span>
+                                    </li>
+                                    <li className="flex items-center gap-4">
+                                        <i data-lucide="feather" className="text-rouge-400"></i>
+                                        <span>Kết cấu mỏng nhẹ, không gây nặng môi</span>
+                                    </li>
+                                    <li className="flex items-center gap-4">
+                                        <i data-lucide="shield-check" className="text-rouge-400"></i>
+                                        <span>An toàn tuyệt đối, không chứa Chì</span>
+                                    </li>
+                                </ul>
+                                <button className="mt-12 bg-white text-rouge-900 px-8 py-4 rounded-full font-bold hover:bg-rouge-200 transition shadow-lg shadow-black/20">
+                                    Tìm Hiểu Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Pre-order Form */}
+                    <section className="py-24 container mx-auto px-6 relative">
+                        <div className="max-w-2xl mx-auto text-center bg-white p-12 rounded-[3rem] shadow-xl border border-rouge-100">
+                            <h2 className="text-4xl font-serif mb-4 text-rouge-900">Sign up for Early Access</h2>
+                            <p className="text-rouge-500 mb-8">Nhận thông báo khi bộ sưu tập mới ra mắt + Voucher giảm 20%.</p>
+                            <form className="flex flex-col md:flex-row gap-4 mb-4">
+                                <input type="email" placeholder="Email của bạn..." className="flex-1 bg-rouge-50 px-6 py-4 rounded-full border-none focus:ring-2 focus:ring-rouge-500 outline-none" />
+                                <button className="bg-rouge-600 text-white px-8 py-4 rounded-full font-bold hover:bg-rouge-700 transition shadow-lg shadow-rouge-500/30">
+                                    Đăng Ký
+                                </button>
+                            </form>
+                            <p className="text-xs text-stone-400">Chúng tôi tôn trọng quyền riêng tư của bạn.</p>
+                        </div>
+                    </section>
+
+                    <footer className="bg-rouge-950 text-white py-12 text-center border-t border-white/10">
+                        <div className="serif text-2xl font-bold mb-6 tracking-widest">Rouge Élite</div>
+                        <div className="flex justify-center gap-8 mb-8 text-sm uppercase tracking-widest opacity-60">
+                            <a href="#" className="hover:text-rouge-400">Instagram</a>
+                            <a href="#" className="hover:text-rouge-400">Facebook</a>
+                            <a href="#" className="hover:text-rouge-400">Tiktok</a>
+                        </div>
+                        <p className="text-xs opacity-40">© 2026 Rouge Élite Cosmetics. All rights reserved.</p>
+                    </footer>
+                </div>
+            )
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
