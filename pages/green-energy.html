@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,19 +26,28 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Open Sans', sans-serif; background-color: #F0F9F4; color: #145A32; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F0F9F4;
+            color: #145A32;
+        }
+
         .leaf-shape {
             border-radius: 0% 100% 0% 100% / 0% 100% 0% 100%;
         }
     </style>
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/green-energy.svg">
 </head>
+
 <body class="overflow-x-hidden">
     <div id="root"></div>
     <script type="text/babel">
@@ -45,56 +55,56 @@
         const { motion } = Motion;
 
         const App = () => {
-             useEffect(() => lucide.createIcons(), []);
+            useEffect(() => lucide.createIcons(), []);
 
-             return (
-                 <div className="min-h-screen">
-                     <nav className="fixed w-full z-50 px-10 py-6 bg-white/90 backdrop-blur shadow-sm flex justify-between items-center">
-                         <div className="text-2xl font-bold font-sans text-eco-green flex items-center gap-2">
-                             <i data-lucide="sun" className="fill-current w-8 h-8 text-eco-yellow"></i> HELIOS
-                         </div>
-                         <button className="bg-eco-green text-white px-6 py-2 rounded-full font-bold hover:bg-eco-dark transition">
-                             Tính Toán Tiết Kiệm
-                         </button>
-                     </nav>
+            return (
+                <div className="min-h-screen">
+                    <nav className="fixed w-full z-50 px-10 py-6 bg-white/90 backdrop-blur shadow-sm flex justify-between items-center">
+                        <div className="text-2xl font-bold font-sans text-eco-green flex items-center gap-2">
+                            <i data-lucide="sun" className="fill-current w-8 h-8 text-eco-yellow"></i> HELIOS
+                        </div>
+                        <button className="bg-eco-green text-white px-6 py-2 rounded-full font-bold hover:bg-eco-dark transition">
+                            Tính Toán Tiết Kiệm
+                        </button>
+                    </nav>
 
-                     {/* Hero */}
-                     <header className="pt-32 pb-20 px-6 container mx-auto flex flex-col-reverse md:flex-row items-center gap-16">
-                         <div className="md:w-1/2">
-                             <motion.div initial={{opacity: 0, x: -50}} animate={{opacity: 1, x: 0}} transition={{duration: 0.8}}>
-                                 <h1 className="font-sans text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                                     Năng Lượng Sạch <br/> Cho Tương Lai Xanh
-                                 </h1>
-                                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                                     Chuyển đổi ngôi nhà của bạn sang sử dụng năng lượng mặt trời. Giảm hóa đơn điện đến 80% và bảo vệ hành tinh của chúng ta.
-                                 </p>
-                                 <div className="flex gap-4">
-                                     <div className="flex-1 bg-white p-4 rounded-xl shadow-md border-l-4 border-eco-yellow">
-                                         <div className="text-sm text-gray-500 mb-1">Tiết kiệm trung bình</div>
-                                         <div className="text-2xl font-bold text-eco-dark">25 Triệu/Năm</div>
-                                     </div>
-                                     <div className="flex-1 bg-white p-4 rounded-xl shadow-md border-l-4 border-eco-green">
-                                         <div className="text-sm text-gray-500 mb-1">Giảm khí thải</div>
-                                         <div className="text-2xl font-bold text-eco-dark">4.5 Tấn CO2</div>
-                                     </div>
-                                 </div>
-                             </motion.div>
-                         </div>
-                         
-                         <div className="md:w-1/2 relative">
-                             <div className="leaf-shape overflow-hidden shadow-2xl bg-white p-4">
-                                  <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1000" className="w-full h-full object-cover leaf-shape" alt="Solar Panels" />
-                             </div>
-                         </div>
+                    {/* Hero */}
+                    <header className="pt-32 pb-20 px-6 container mx-auto flex flex-col-reverse md:flex-row items-center gap-16">
+                        <div className="md:w-1/2">
+                            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+                                <h1 className="font-sans text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                                    Năng Lượng Sạch <br /> Cho Tương Lai Xanh
+                                </h1>
+                                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                                    Chuyển đổi ngôi nhà của bạn sang sử dụng năng lượng mặt trời. Giảm hóa đơn điện đến 80% và bảo vệ hành tinh của chúng ta.
+                                </p>
+                                <div className="flex gap-4">
+                                    <div className="flex-1 bg-white p-4 rounded-xl shadow-md border-l-4 border-eco-yellow">
+                                        <div className="text-sm text-gray-500 mb-1">Tiết kiệm trung bình</div>
+                                        <div className="text-2xl font-bold text-eco-dark">25 Triệu/Năm</div>
+                                    </div>
+                                    <div className="flex-1 bg-white p-4 rounded-xl shadow-md border-l-4 border-eco-green">
+                                        <div className="text-sm text-gray-500 mb-1">Giảm khí thải</div>
+                                        <div className="text-2xl font-bold text-eco-dark">4.5 Tấn CO2</div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        <div className="md:w-1/2 relative">
+                            <div className="leaf-shape overflow-hidden shadow-2xl bg-white p-4">
+                                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1000" className="w-full h-full object-cover leaf-shape" alt="Solar Panels" />
+                            </div>
+                        </div>
                     </header>
 
                     {/* Benefits Section */}
                     <section className="py-20 bg-white">
                         <div className="container mx-auto px-6">
-                            <motion.div 
-                                initial={{opacity: 0, y: 20}}
-                                whileInView={{opacity: 1, y: 0}}
-                                transition={{duration: 0.6}}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
                                 className="text-center mb-16">
                                 <h2 className="font-sans text-3xl md:text-4xl font-bold mb-4">Tại Sao Chọn Helios?</h2>
                                 <p className="text-gray-600 max-w-2xl mx-auto">Công nghệ tiên tiến, quy trình chuyên nghiệp và cam kết bền vững cho ngôi nhà của bạn.</p>
@@ -121,11 +131,11 @@
                                         color: "text-blue-500"
                                     }
                                 ].map((item, index) => (
-                                    <motion.div 
+                                    <motion.div
                                         key={index}
-                                        initial={{opacity: 0, y: 20}}
-                                        whileInView={{opacity: 1, y: 0}}
-                                        transition={{duration: 0.5, delay: index * 0.2}}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.5, delay: index * 0.2 }}
                                         className="bg-eco-bg p-8 rounded-2xl hover:shadow-lg transition duration-300 border border-transparent hover:border-eco-green/20">
                                         <div className={`w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm mb-6 ${item.color}`}>
                                             <i data-lucide={item.icon} className="w-7 h-7"></i>
@@ -142,7 +152,7 @@
                     <section className="py-20 bg-eco-dark text-white relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-eco-green rounded-full blur-[100px] opacity-20"></div>
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-eco-yellow rounded-full blur-[100px] opacity-10"></div>
-                        
+
                         <div className="container mx-auto px-6 relative z-10">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                                 {[
@@ -152,7 +162,7 @@
                                     { num: "25 Năm", label: "Kinh Nghiệm" }
                                 ].map((stat, i) => (
                                     <div key={i} className="p-4">
-                                        <div className="text-4xl md:text-5xl font-bold font-sans text-eco-yellow mb-2">{stat.num}</div>
+                                        <div className="text-3xl md:text-5xl font-bold font-sans text-eco-yellow mb-2">{stat.num}</div>
                                         <div className="text-eco-bg/80 font-medium">{stat.label}</div>
                                     </div>
                                 ))}
@@ -185,11 +195,12 @@
                             </div>
                         </div>
                     </section>
-                 </div>
-             );
+                </div>
+            );
         };
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
 </body>
+
 </html>
