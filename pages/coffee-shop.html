@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Artisan - Specialty Coffee</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            100: '#F5E6D3',
+                            300: '#D4A373',
+                            500: '#A98467',
+                            800: '#6F4E37',
+                            900: '#3E2723',
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Lora', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Lora', serif; background-color: #F9F5F0; color: #3E2723; }
+        .lux-border { border: 1px solid rgba(111, 78, 55, 0.2); }
+        .bean-pattern {
+            background-image: radial-gradient(#D4A373 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion } = Motion;
+
+        const App = () => {
+            useEffect(() => lucide.createIcons(), []);
+
+            return (
+                <div className="min-h-screen">
+                    <nav className="fixed w-full z-50 py-6 px-10 bg-[#F9F5F0]/90 backdrop-blur-sm shadow-sm flex justify-between items-center">
+                        <span className="font-display font-bold text-2xl tracking-wider text-coffee-800 flex items-center gap-2">
+                            <i data-lucide="coffee" className="w-6 h-6"></i> THE ARTISAN
+                        </span>
+                        <div className="hidden md:flex gap-8 text-coffee-800 font-medium text-sm tracking-wide uppercase">
+                            <a href="#" className="hover:text-coffee-500 transition">Câu Chuyện</a>
+                            <a href="#" className="hover:text-coffee-500 transition">Thực Đơn</a>
+                            <a href="#" className="hover:text-coffee-500 transition">Hạt Cà Phê</a>
+                            <a href="#" className="hover:text-coffee-500 transition">Đặt Chỗ</a>
+                        </div>
+                    </nav>
+
+                    {/* Hero */}
+                    <section className="relative h-screen flex items-center justify-center p-6">
+                        <div className="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80" 
+                                 className="w-full h-full object-cover brightness-[0.6]" alt="Coffee Shop" />
+                        </div>
+                        <div className="relative z-10 text-center text-[#F5E6D3]">
+                            <motion.p initial={{y: 20, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{delay: 0.2}} 
+                                className="text-sm md:text-base tracking-[0.3em] uppercase mb-4 text-coffee-300">
+                                Since 1995
+                            </motion.p>
+                            <motion.h1 initial={{y: 20, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{delay: 0.4}} 
+                                className="font-display text-5xl md:text-8xl font-bold mb-6 italic">
+                                Taste the Passion
+                            </motion.h1>
+                            <motion.p initial={{y: 20, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{delay: 0.6}} 
+                                className="max-w-xl mx-auto text-lg md:text-xl font-light leading-relaxed mb-10 text-white/90">
+                                Mỗi tách cà phê là một tác phẩm nghệ thuật, được rang xay thủ công từ những hạt cà phê Arabica thượng hạng nhất.
+                            </motion.p>
+                            <motion.button initial={{y: 20, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{delay: 0.8}} 
+                                className="bg-coffee-800 text-[#F5E6D3] px-10 py-4 rounded-none hover:bg-coffee-900 transition duration-500 font-bold uppercase tracking-widest text-sm">
+                                Khám Phá Menu
+                            </motion.button>
+                        </div>
+                    </section>
+                    
+                    {/* About section with Image Grid */}
+                    <section className="py-24 px-6 max-w-7xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                            <div className="space-y-8">
+                                <h2 className="font-display text-4xl md:text-5xl text-coffee-900 leading-tight">
+                                    Nghệ Thuật <br/><span className="italic text-coffee-500">Rang Xay Thủ Công</span>
+                                </h2>
+                                <p className="text-coffee-800/80 leading-loose text-lg">
+                                    Tại The Artisan, chúng tôi tin rằng hương vị tuyệt hảo bắt nguồn từ sự tận tâm. Quy trình "Farm to Cup" đảm bảo trọn vẹn hương vị nguyên bản của đất trời.
+                                </p>
+                                <div className="grid grid-cols-2 gap-8 pt-4">
+                                    <div>
+                                        <h4 className="font-display text-3xl text-coffee-500 mb-2">100%</h4>
+                                        <p className="text-sm uppercase tracking-wider text-coffee-900">Arabica Hữu Cơ</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-display text-3xl text-coffee-500 mb-2">24h</h4>
+                                        <p className="text-sm uppercase tracking-wider text-coffee-900">Rang Mới Mỗi Ngày</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80" className="w-full h-80 object-cover rounded-sm mt-12" alt="Coffee Pour" />
+                                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80" className="w-full h-80 object-cover rounded-sm" alt="Coffee Beans" />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Featured Product */}
+                    <section className="py-20 bg-coffee-800 text-[#F5E6D3]">
+                        <div className="max-w-7xl mx-auto px-6 text-center">
+                            <span className="text-coffee-300 uppercase tracking-widest text-sm font-bold mb-4 block">Best Seller</span>
+                            <h2 className="font-display text-4xl md:text-6xl mb-12">Signature Cold Brew</h2>
+                            <div className="flex flex-col md:flex-row justify-center items-center gap-10">
+                                <div className="text-center group cursor-pointer">
+                                    <div className="w-64 h-80 overflow-hidden mb-6 relative">
+                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-500"></div>
+                                         <img src="https://images.unsplash.com/photo-1517701604599-bb29b5c7fa69?auto=format&fit=crop&q=80" className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Cold Brew" />
+                                    </div>
+                                    <h3 className="font-display text-2xl mb-2">Classic Cold Brew</h3>
+                                    <p className="text-coffee-300 font-mono italic">$5.50</p>
+                                </div>
+                                <div className="text-center group cursor-pointer mt-12 md:mt-0">
+                                    <div className="w-64 h-80 overflow-hidden mb-6 relative">
+                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-500"></div>
+                                         <img src="https://images.unsplash.com/photo-1461023058943-48dbf1399f98?auto=format&fit=crop&q=80" className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Latte" />
+                                    </div>
+                                    <h3 className="font-display text-2xl mb-2">Caramel Macchiato</h3>
+                                    <p className="text-coffee-300 font-mono italic">$6.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Reviews */}
+                    <section className="py-24 px-6 max-w-5xl mx-auto text-center">
+                        <i data-lucide="quote" className="w-12 h-12 text-coffee-300 mx-auto mb-8"></i>
+                        <h2 className="font-display text-3xl md:text-4xl mb-12 italic text-coffee-900">
+                            "Không gian tuyệt vời, hương vị cà phê đậm đà khó quên. Một nơi lý tưởng để tìm lại sự bình yên giữa phố thị."
+                        </h2>
+                        <div className="flex items-center justify-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80" className="w-12 h-12 rounded-full object-cover grayscale" alt="Customer" />
+                            <div className="text-left">
+                                <p className="font-bold text-coffee-900 text-sm tracking-widest uppercase">Sarah Nguyễn</p>
+                                <p className="text-coffee-500 text-xs italic">Food Blogger</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Location / CTA */}
+                    <section className="py-24 bg-[#F5E6D3] relative">
+                         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                            <div>
+                                <h2 className="font-display text-5xl mb-6 text-coffee-900">Ghé Thăm Chúng Tôi</h2>
+                                <p className="text-coffee-800 text-lg mb-8 leading-relaxed">
+                                    Thưởng thức cà phê trong không gian kiến trúc Pháp cổ điển. <br/>
+                                    Mở cửa hàng ngày từ 7:00 - 22:00.
+                                </p>
+                                <div className="space-y-4 mb-10">
+                                    <div className="flex items-center gap-4 text-coffee-900 font-bold">
+                                        <i data-lucide="map-pin" className="w-5 h-5"></i>
+                                        <span>123 Đường Cà Phê, Quận 1, TP.HCM</span>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-coffee-900 font-bold">
+                                        <i data-lucide="phone" className="w-5 h-5"></i>
+                                        <span>090 123 4567</span>
+                                    </div>
+                                </div>
+                                <button className="bg-coffee-900 text-[#F5E6D3] px-8 py-3 font-bold uppercase tracking-widest text-xs hover:bg-coffee-800 transition">
+                                    Chỉ Đường
+                                </button>
+                            </div>
+                            <div className="h-96 w-full bg-coffee-800 p-2 rotated-3 shadow-2xl skew-y-3">
+                                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80" className="w-full h-full object-cover brightness-90" alt="Shop Interior" />
+                            </div>
+                         </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="bg-coffee-900 text-[#F5E6D3] py-20 px-6 text-center">
+                        <div className="flex justify-center items-center gap-3 mb-8">
+                             <i data-lucide="coffee" className="w-8 h-8"></i>
+                             <span className="font-display text-2xl font-bold tracking-widest">THE ARTISAN</span>
+                        </div>
+                        <div className="flex justify-center gap-8 mb-12 text-sm uppercase tracking-wider text-coffee-300">
+                            <a href="#" className="hover:text-white transition">Instagram</a>
+                            <a href="#" className="hover:text-white transition">Facebook</a>
+                            <a href="#" className="hover:text-white transition">TripAdvisor</a>
+                        </div>
+                        <p className="text-coffee-500 text-xs">© 2026 The Artisan Coffee. All rights reserved.</p>
+                    </footer>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

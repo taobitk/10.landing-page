@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRON FORGE - Premium Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            lime: '#D2F802',
+                            black: '#0A0A0A',
+                            gray: '#171717',
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #0A0A0A; color: white; }
+        .skewed-bg {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        .text-outline {
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2);
+            color: transparent;
+        }
+        .btn-hover:hover {
+            box-shadow: 4px 4px 0px #D2F802;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion } = Motion;
+
+        const App = () => {
+            useEffect(() => lucide.createIcons(), []);
+
+            return (
+                <div className="min-h-screen bg-brand-black">
+                    {/* Header */}
+                    <nav className="fixed w-full z-50 py-6 px-6 md:px-12 flex justify-between items-center mix-blend-difference text-white">
+                        <div className="text-3xl font-heading font-bold italic tracking-tighter">IRON<span className="text-brand-lime">FORGE</span></div>
+                        <button className="hidden md:block border-2 border-white px-8 py-2 font-bold uppercase tracking-wider hover:bg-white hover:text-black transition duration-300">
+                            Join Now
+                        </button>
+                    </nav>
+
+                    {/* Hero */}
+                    <header className="relative h-screen flex items-center skewed-bg bg-brand-gray overflow-hidden">
+                        <div className="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2670&auto=format&fit=crop" 
+                                 className="w-full h-full object-cover opacity-40 grayscale" alt="Gym" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+                        </div>
+                        
+                        <div className="container mx-auto px-6 relative z-10 pt-20">
+                            <motion.div initial={{x: -100, opacity: 0}} animate={{x: 0, opacity: 1}} transition={{duration: 0.8}}>
+                                <h1 className="font-heading font-bold text-7xl md:text-[10rem] leading-[0.85] uppercase italic mb-8">
+                                    Build <br/>
+                                    <span className="text-transparent text-outline hover:text-brand-lime transition-all duration-500 cursor-default">Your</span> <br/>
+                                    Legacy
+                                </h1>
+                                <p className="max-w-md text-gray-400 text-lg font-medium mb-10 border-l-4 border-brand-lime pl-6">
+                                    Không chỉ là phòng tập. Đây là thánh địa của những chiến binh. Trang thiết bị tối tân, huấn luyện viên đẳng cấp.
+                                </p>
+                                <button className="bg-brand-lime text-black font-bold font-heading text-2xl px-12 py-4 uppercase skew-x-[-10deg] hover:skew-x-0 transition-transform btn-hover">
+                                    <span className="block skew-x-[10deg]">Tập Thử Miễn Phí</span>
+                                </button>
+                            </motion.div>
+                        </div>
+                    </header>
+
+                    {/* Marquee */}
+                    <div className="bg-brand-lime py-6 overflow-hidden flex whitespace-nowrap">
+                        <div className="animate-marquee flex gap-12 text-black font-heading font-bold text-5xl uppercase italic tracking-tighter">
+                            <span>Strength</span> • <span>Endurance</span> • <span>Power</span> • <span>Discipline</span> • <span>Strength</span> • <span>Endurance</span> • <span>Power</span> • <span>Discipline</span>
+                        </div>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <section className="py-24 px-6 container mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {[
+                                {val: "05", label: "Studio chuyên biệt"},
+                                {val: "24/7", label: "Mở cửa toàn thời gian"},
+                                {val: "100+", label: "Thiết bị Hammer Strength"},
+                                {val: "Top 1", label: "Huấn luyện viên chuẩn quốc tế"}
+                            ].map((stat, i) => (
+                                <div key={i} className="border border-white/10 p-8 hover:bg-white/5 transition group cursor-pointer">
+                                    <h3 className="font-heading text-6xl font-bold text-brand-lime mb-2 group-hover:scale-110 origin-left transition-transform">{stat.val}</h3>
+                                    <p className="text-gray-400 uppercase tracking-widest font-bold text-sm">{stat.label}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Classes */}
+                    <section className="py-20 relative">
+                        <div className="container mx-auto px-6">
+                            <div className="flex justify-between items-end mb-16">
+                                <h2 className="text-5xl md:text-7xl font-heading font-bold uppercase italic">
+                                    Các Lớp Học <span className="text-brand-lime">Đặc Biệt</span>
+                                </h2>
+                                <a href="#" className="hidden md:flex items-center gap-2 text-brand-lime font-bold uppercase hover:gap-4 transition-all">
+                                    Xem lịch tập <i data-lucide="arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {[
+                                    {img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2669", title: "CrossFit"},
+                                    {img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2670", title: "HIIT Boxing"},
+                                    {img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2669", title: "Yoga Flow"}
+                                ].map((cls, i) => (
+                                    <div key={i} className="group relative h-[500px] overflow-hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+                                        <img src={cls.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 filter grayscale group-hover:grayscale-0" alt={cls.title} />
+                                        <div className="absolute bottom-8 left-8 z-20">
+                                            <h3 className="text-4xl font-heading font-bold italic text-white group-hover:text-brand-lime transition">{cls.title}</h3>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Transformation Stories */}
+                    <section className="py-20 bg-brand-gray border-t border-white/5">
+                        <div className="container mx-auto px-6">
+                             <h2 className="text-4xl md:text-6xl font-heading font-bold uppercase italic mb-12 text-center text-white">
+                                Real <span className="text-brand-lime">Results</span>
+                             </h2>
+                             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                 <div className="bg-black p-6 border border-white/10 flex gap-6 items-center">
+                                     <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=200&auto=format&fit=crop" className="w-24 h-24 object-cover rounded-full border-2 border-brand-lime grayscale" alt="Member" />
+                                     <div>
+                                         <p className="text-gray-300 italic mb-4">"Tôi đã giảm 15kg và tìm lại sự tự tin. Iron Forge không chỉ là nơi tập luyện, đó là gia đình thứ 2 của tôi."</p>
+                                         <h4 className="font-heading font-bold text-xl uppercase text-brand-lime">Minh Tuấn</h4>
+                                         <span className="text-xs text-gray-500 uppercase font-bold">Member since 2023</span>
+                                     </div>
+                                 </div>
+                                 <div className="bg-black p-6 border border-white/10 flex gap-6 items-center">
+                                     <img src="https://images.unsplash.com/photo-1611590027211-b954fd027b51?q=80&w=200&auto=format&fit=crop" className="w-24 h-24 object-cover rounded-full border-2 border-brand-lime grayscale" alt="Member" />
+                                     <div>
+                                         <p className="text-gray-300 italic mb-4">"PT ở đây cực kỳ chuyên nghiệp và tận tâm. Cơ sở vật chất thì không chê vào đâu được."</p>
+                                         <h4 className="font-heading font-bold text-xl uppercase text-brand-lime">Lan Anh</h4>
+                                         <span className="text-xs text-gray-500 uppercase font-bold">Member since 2024</span>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                    </section>
+
+                    {/* Membership CTA */}
+                    <section className="py-24 px-6 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-brand-lime/10 skew-y-3 transform origin-bottom-right scale-110"></div>
+                        <div className="container mx-auto max-w-4xl relative z-10 bg-black border border-brand-lime p-12 md:p-20 text-center skew-x-[-2deg]">
+                            <h2 className="text-5xl md:text-7xl font-heading font-bold uppercase italic mb-6 skew-x-[2deg]">
+                                Start Your <span className="text-brand-lime">Journey</span>
+                            </h2>
+                            <p className="text-gray-400 mb-10 text-xl font-medium skew-x-[2deg]">
+                                Đừng chờ đợi. Hãy bắt đầu thay đổi bản thân ngay hôm nay.
+                            </p>
+                            <form className="max-w-md mx-auto space-y-4 skew-x-[2deg]">
+                                <input type="text" placeholder="HỌ TÊN" className="w-full bg-transparent border-b-2 border-white/20 py-3 text-white placeholder-gray-600 font-heading text-xl uppercase focus:border-brand-lime focus:outline-none transition" />
+                                <input type="tel" placeholder="SỐ ĐIỆN THOẠI" className="w-full bg-transparent border-b-2 border-white/20 py-3 text-white placeholder-gray-600 font-heading text-xl uppercase focus:border-brand-lime focus:outline-none transition" />
+                                <button className="w-full bg-brand-lime text-black font-bold font-heading text-2xl py-4 mt-6 uppercase hover:bg-white transition duration-300">
+                                    Đăng Ký Ngay
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+                    
+                    {/* Footer */}
+                     <footer className="bg-brand-gray border-t border-white/10 py-12 px-6">
+                        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                            <div className="text-2xl font-heading font-bold italic tracking-tighter text-white">IRON<span className="text-brand-lime">FORGE</span></div>
+                             <div className="flex gap-6 text-gray-400 font-bold uppercase text-sm">
+                                <a href="#" className="hover:text-white">Instagram</a>
+                                <a href="#" className="hover:text-white">Facebook</a>
+                                <a href="#" className="hover:text-white">Youtube</a>
+                            </div>
+                            <div className="text-gray-500 text-xs font-bold uppercase">
+                                © 2026 Iron Forge Fitness
+                            </div>
+                        </div>
+                     </footer>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
