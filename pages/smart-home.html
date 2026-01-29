@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Smart Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        smart: {
+                            blue: '#007AFF',
+                            bg: '#F5F5F7',
+                            text: '#1D1D1F',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F7; color: #1D1D1F; }
+        .glass-ui {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion } = Motion;
+
+        const App = () => {
+             useEffect(() => lucide.createIcons(), []);
+
+             return (
+                 <div className="min-h-screen">
+                     <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+                         <div className="max-w-5xl mx-auto px-6 h-14 flex justify-between items-center">
+                             <div className="font-semibold text-lg flex items-center gap-2">
+                                 <i data-lucide="wifi" className="w-5 h-5 text-smart-blue"></i> Lumina
+                             </div>
+                             <div className="flex gap-6 text-sm text-gray-600">
+                                 <a href="#" className="hover:text-smart-blue">Tính năng</a>
+                                 <a href="#" className="hover:text-smart-blue">Thiết bị</a>
+                                 <a href="#" className="hover:text-smart-blue">Hỗ trợ</a>
+                             </div>
+                         </div>
+                     </nav>
+
+                     {/* Hero */}
+                     <header className="pt-32 pb-20 text-center px-6">
+                         <motion.div initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} transition={{duration: 0.8}}>
+                             <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-6">
+                                 Ngôi nhà của bạn. <br/> <span className="text-smart-blue">Thông minh hơn.</span>
+                             </h1>
+                             <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-light">
+                                 Điều khiển ánh sáng, nhiệt độ và an ninh chỉ bằng giọng nói hoặc một chạm. Đơn giản đến bất ngờ.
+                             </p>
+                             <div className="flex justify-center gap-4">
+                                 <button className="bg-smart-blue text-white px-8 py-3 rounded-full text-base font-medium hover:bg-blue-600 transition">Mua Lumina Hub</button>
+                                 <a href="#" className="text-smart-blue px-8 py-3 flex items-center gap-1 hover:underline">Xem Video giới thiệu <i data-lucide="chevron-right" className="w-4 h-4"></i></a>
+                             </div>
+                         </motion.div>
+                         
+                         <motion.div initial={{opacity: 0, y: 50}} animate={{opacity: 1, y: 0}} transition={{duration: 0.8, delay: 0.3}} className="mt-16 max-w-5xl mx-auto relative group">
+                             <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop" className="rounded-3xl shadow-2xl relative z-10" alt="Smart Home" />
+                             
+                             {/* Floating UI Elements */}
+                             <motion.div 
+                                 whileHover={{scale: 1.05}}
+                                 className="absolute top-1/4 left-1/4 glass-ui p-4 rounded-2xl z-20 flex items-center gap-3 cursor-pointer">
+                                 <div className="bg-orange-400 p-2 rounded-full text-white"><i data-lucide="sun" className="w-5 h-5"></i></div>
+                                 <div>
+                                     <div className="text-xs text-gray-500 font-medium">Phòng khách</div>
+                                     <div className="font-semibold text-sm">24°C • Ánh sáng ấm</div>
+                                 </div>
+                             </motion.div>
+
+                             <motion.div 
+                                 whileHover={{scale: 1.05}}
+                                 className="absolute bottom-1/4 right-1/4 glass-ui p-4 rounded-2xl z-20 flex items-center gap-3 cursor-pointer">
+                                 <div className="bg-green-500 p-2 rounded-full text-white"><i data-lucide="lock" className="w-5 h-5"></i></div>
+                                 <div>
+                                     <div className="text-xs text-gray-500 font-medium">Cửa chính</div>
+                                     <div className="font-semibold text-sm">Đã khóa an toàn</div>
+                                 </div>
+                             </motion.div>
+                         </motion.div>
+                     </header>
+
+                    {/* Features Section */}
+                    <section className="py-24 bg-white">
+                        <div className="max-w-6xl mx-auto px-6">
+                            <motion.div 
+                                initial={{opacity: 0}}
+                                whileInView={{opacity: 1}}
+                                transition={{duration: 0.8}}
+                                className="text-center mb-16">
+                                <h2 className="text-3xl font-semibold mb-4">Công nghệ đỉnh cao</h2>
+                                <p className="text-gray-500 max-w-2xl mx-auto">Trải nghiệm cuộc sống tiện nghi chưa từng có với hệ sinh thái Lumina.</p>
+                            </motion.div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {[
+                                    {
+                                        title: "Chiếu sáng thông minh",
+                                        desc: "Tự động điều chỉnh theo tâm trạng và thời gian trong ngày.",
+                                        img: "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=600&q=80",
+                                        icon: "lightbulb"
+                                    },
+                                    {
+                                        title: "An ninh 24/7",
+                                        desc: "Giám sát ngôi nhà của bạn mọi lúc mọi nơi với AI Camera.",
+                                        img: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=600&q=80",
+                                        icon: "shield"
+                                    },
+                                    {
+                                        title: "Điều khiển giọng nói",
+                                        desc: "Tương thích với mọi trợ lý ảo phổ biến nhất hiện nay.",
+                                        img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&q=80",
+                                        icon: "mic"
+                                    }
+                                ].map((feature, i) => (
+                                    <motion.div 
+                                        key={i}
+                                        initial={{opacity: 0, y: 30}}
+                                        whileInView={{opacity: 1, y: 0}}
+                                        transition={{delay: i * 0.2}}
+                                        className="group cursor-pointer">
+                                        <div className="relative overflow-hidden rounded-2xl mb-6 aspect-[4/3]">
+                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-500 z-10"></div>
+                                            <img src={feature.img} className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" alt={feature.title} />
+                                            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full z-20">
+                                                <i data-lucide={feature.icon} className="w-5 h-5 text-smart-blue"></i>
+                                            </div>
+                                        </div>
+                                        <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                                        <p className="text-gray-500 leading-relaxed text-sm">{feature.desc}</p>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                 </div>
+             );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
